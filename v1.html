@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Time Pad Theory Implementation</title>
+</head>
+
+<body>
+    <h1>encryption</h1>
+    <h6>Plain Text</h6>
+    <textarea id="plaintextenc"></textarea>
+    <h6>Key Text</h6>
+    <textarea id="keytextenc"></textarea>
+    <button onclick="processEncrypt()">Encryt</button>
+    <h6>Result:</h6>
+    <div id="ciphertextdiv"></div>
+    <script>
+        function xorCharacters(charA, charB) {
+            // 1. Get the numerical Unicode value for each character
+            const codeA = charA.charCodeAt(0);
+            const codeB = charB.charCodeAt(0);
+
+            // 2. Perform the Bitwise XOR (^) operation on the numbers
+            const xorResult = (codeA ^ codeB);
+            // console.log(xorResult)
+
+            // 3. Convert the resulting number back into a character
+            return String.fromCharCode(xorResult);
+        }
+        function processEncrypt() {
+            let plaintextenc = document.getElementById('plaintextenc')
+            let keytextenc = document.getElementById('keytextenc')
+            let ciphertextdiv = document.getElementById('ciphertextdiv')
+
+            plaintextenc = plaintextenc.value
+            keytextenc = keytextenc.value
+            ciphertextdiv.innerHTML = ''
+
+            if (keytextenc.length < plaintextenc.length) {
+                alert("OTP Error: The Key length must be as long as the Plain Text length!");
+                return;
+            }
+
+            rawChars = ''
+            for (let i = 0; i < plaintextenc.length; i++) {
+                rawChars += xorCharacters(plaintextenc[i], keytextenc[i])
+                // console.log(xorCharacters(plaintextenc[i], keytextenc[i]))
+                
+            }
+            ciphertextdiv.innerHTML = btoa(rawChars)
+            // console.log(btoa(rawChars))
+        }
+
+    </script>
+
+    <hr>
+
+    <h1>decryption</h1>
+    <h6>Cipher Text</h6>
+    <textarea id="ciphertextdec"></textarea>
+    <h6>Key Text</h6>
+    <textarea id="keytextdec"></textarea>
+    <button onclick="processDecrypt()">Decryt</button>
+    <h6>Result:</h6>
+    <div id="plaintextdivdec"></div>
+    <script>
+        function processDecrypt() {
+            let ciphertextdec = document.getElementById('ciphertextdec')
+            let keytextdec = document.getElementById('keytextdec')
+            let plaintextdivdec = document.getElementById('plaintextdivdec')
+
+            ciphertextdec = atob(ciphertextdec.value)
+            keytextdec = keytextdec.value
+            plaintextdivdec.innerHTML = ''
+
+            if (keytextdec.length < ciphertextdec.length) {
+                alert("OTP Error: The Key must be as long as the Cipher Text!");
+                return;
+            }
+
+            rawChars = ''
+            for (let i = 0; i < ciphertextdec.length; i++) {
+                rawChars += xorCharacters(ciphertextdec[i], keytextdec[i])
+                // console.log(xorCharacters(plaintextenc[i], keytextenc[i]))
+                
+            }
+            plaintextdivdec.innerHTML = rawChars
+            // console.log(btoa(rawChars))
+        }
+
+    </script>
+
+</body>
+
+</html>

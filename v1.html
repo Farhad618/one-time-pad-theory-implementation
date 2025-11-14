@@ -47,7 +47,7 @@
             for (let i = 0; i < plaintextenc.length; i++) {
                 rawChars += xorCharacters(plaintextenc[i], keytextenc[i])
                 // console.log(xorCharacters(plaintextenc[i], keytextenc[i]))
-                
+
             }
             ciphertextdiv.innerHTML = btoa(rawChars)
             // console.log(btoa(rawChars))
@@ -84,7 +84,7 @@
             for (let i = 0; i < ciphertextdec.length; i++) {
                 rawChars += xorCharacters(ciphertextdec[i], keytextdec[i])
                 // console.log(xorCharacters(plaintextenc[i], keytextenc[i]))
-                
+
             }
             plaintextdivdec.innerHTML = rawChars
             // console.log(btoa(rawChars))
